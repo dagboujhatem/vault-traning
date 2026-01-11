@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault-server
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_API_ADDR: http://0.0.0.0:8200
+      VAULT_CLUSTER_ADDR: https://0.0.0.0:8201
+    volumes:
+      - ./config:/vault/config
+      - ./data:/vault/file
+      - ./logs:/vault/logs
+      - ./policies:/vault/policies
+    cap_add:
+      - IPC_LOCK
+    command: server -config=/vault/config/vault-config.hcl
+    networks:
+      - vault-network
+
+networks:
+  vault-network:
+    driver: bridge

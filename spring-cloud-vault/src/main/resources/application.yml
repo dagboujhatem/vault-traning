@@ -1,0 +1,26 @@
+# Import de la configuration Vault
+spring:
+  config:
+    import: optional:vault://
+
+# Valeurs par défaut (fallback)
+database:
+  username: default-user
+  password: default-password
+
+api:
+  key: default-api-key
+
+app:
+  environment: local
+
+# Configuration serveur
+server:
+  port: 8080
+
+# Logging
+logging:
+  level:
+    com.example.vault: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

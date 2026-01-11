@@ -1,0 +1,606 @@
+{
+	"info": {
+		"_postman_id": "vault-training-collection",
+		"name": "Vault Training",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Collection pour la formation Vault - Exercices pratiques"
+	},
+	"item": [
+		{
+			"name": "1. Health and Status",
+			"item": [
+				{
+					"name": "Check Vault Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/health",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vault Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/seal-status",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"seal-status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Authentication",
+			"item": [
+				{
+					"name": "Login with Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{vault_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/token/login",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"token",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policies\": [\"default\"],\n    \"ttl\": \"1h\"\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/token/create",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"token",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Secrets Management",
+			"item": [
+				{
+					"name": "List Secrets Engines",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/mounts",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"mounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable KV Secrets Engine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"kv\",\n    \"options\": {\n        \"version\": \"2\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/mounts/secret",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"mounts",
+								"secret"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Write Secret",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"username\": \"admin\",\n        \"password\": \"supersecret123\",\n        \"host\": \"localhost\",\n        \"port\": 5432\n    }\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/secret/data/myapp/database",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"secret",
+								"data",
+								"myapp",
+								"database"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Secret",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/secret/data/myapp/database",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"secret",
+								"data",
+								"myapp",
+								"database"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Secrets",
+					"request": {
+						"method": "LIST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/secret/metadata/myapp/",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"secret",
+								"metadata",
+								"myapp",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Secret",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/secret/data/myapp/database",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"secret",
+								"data",
+								"myapp",
+								"database"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Policies",
+			"item": [
+				{
+					"name": "List Policies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/policy",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"policy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Policy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/policy/default",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"policy",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policy\": \"path \\\"secret/data/developers/*\\\" {\\n  capabilities = [\\\"create\\\", \\\"read\\\", \\\"update\\\", \\\"delete\\\", \\\"list\\\"]\\n}\\n\\npath \\\"secret/metadata/developers/*\\\" {\\n  capabilities = [\\\"list\\\"]\\n}\"\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/policy/developers",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"policy",
+								"developers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. AppRole Authentication",
+			"item": [
+				{
+					"name": "Enable AppRole Auth",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"approle\"\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/sys/auth/approle",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"sys",
+								"auth",
+								"approle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create AppRole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"secret_id_ttl\": \"10m\",\n    \"token_num_uses\": 10,\n    \"token_ttl\": \"20m\",\n    \"token_max_ttl\": \"30m\",\n    \"secret_id_num_uses\": 40\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/approle/role/myapp",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"approle",
+								"role",
+								"myapp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/approle/role/myapp/role-id",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"approle",
+								"role",
+								"myapp",
+								"role-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Secret ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Vault-Token",
+								"value": "{{vault_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/approle/role/myapp/secret-id",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"approle",
+								"role",
+								"myapp",
+								"secret-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with AppRole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role_id\": \"{{role_id}}\",\n    \"secret_id\": \"{{secret_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{vault_url}}/v1/auth/approle/login",
+							"host": [
+								"{{vault_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"approle",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "vault_url",
+			"value": "http://localhost:8200",
+			"type": "string"
+		},
+		{
+			"key": "vault_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "role_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secret_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

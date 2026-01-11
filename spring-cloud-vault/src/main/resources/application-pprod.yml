@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      token: ${VAULT_TOKEN:root-token}
+      kv:
+        enabled: true
+        backend: secret
+        application-name: ap10981/pprod/secret-pprod
+      authentication: TOKEN
+      fail-fast: true
+      config:
+        lifecycle:
+          min-renewal: 10s
+          expiry-threshold: 1m
+          
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+  endpoint:
+    health:
+      show-details: always
+      
+logging:
+  level:
+    org.springframework.cloud.vault: WARN
+    com.example.vault: INFO
+    
+server:
+  port: 8082
+
+# Profil pré-production - configuration spécifique
+app:
+  profile: pre-production
+  environment: pprod
+  debug: false

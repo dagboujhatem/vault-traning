@@ -98,4 +98,4 @@ Suivez les exercices dans l'ordre pour une progression logique :
 - Solutions disponibles dans `solutions/`
 
 ---
-*Formation Terraform-Vault - BNP Paribas 2026*
+*Formation Terraform-Vault*

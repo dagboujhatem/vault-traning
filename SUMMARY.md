@@ -107,4 +107,4 @@ En cas de problème :
 3. Vérifier les logs : `docker logs vault-server`
 
 ---
-*Formation complète prête à utiliser - BNP Paribas 2026*
+*Formation complète prête à utiliser*

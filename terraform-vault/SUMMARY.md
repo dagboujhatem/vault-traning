@@ -98,4 +98,4 @@ terraform-vault/
 - Bonnes pratiques de production
 
 ---
-*Formation complète Terraform-Vault - BNP Paribas 2026*
+*Formation complète Terraform-Vault*

@@ -262,4 +262,4 @@ Chaque profil charge ses secrets depuis un chemin spécifique dans Vault :
 Les applications sont démarrées simultanément via Docker Compose, chacune avec son propre port et son profil Spring.
 
 ---
-*Démonstration Spring Cloud Vault - BNP Paribas 2026*
+*Démonstration Spring Cloud Vault*
